@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Knowledge Hub</title>
+
+<style>
+:root { --header-h: 84px; }
+
+body {
+  font-family: "Times New Roman", serif;
+  color: #000;
+  margin: 0;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+/* ✅ Fixed header (auto height so logo never crops) */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.98);
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+  padding: 10px 30px;              /* give breathing room */
+  z-index: 9999;
+  overflow: visible;               /* ensure nothing clips */
+}
+
+.site-header a img {
+  display: block;
+  height: auto;
+  width: auto;                     /* let it size naturally */
+  max-height: 110px;                /* keeps header tidy while fully visible */
+}
+
+/* ✅ Search bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-container input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 220px;
+  transition: all 0.3s ease;
+}
+
+.search-container input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 4px rgba(0,123,255,0.4);
+}
+
+/* ✅ Content offset dynamically matches header height */
+.container {
+  padding: calc(var(--header-h) + 24px) 40px 60px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.section {
+  background-color: #fff;
+  flex: 1;
+  min-width: 300px;
+  max-width: 32%;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 25px;
+  text-align: center;
+}
+
+.section h2 { color: #007bff; margin-bottom: 15px; }
+
+ul { list-style-type: none; padding: 0; margin: 0; }
+
+.list-item {
+  background-color: #000;
+  color: #fff;
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.list-item:hover { background-color: #dcdcdc; color: #000; }
+
+/* ✅ Highlighted search text */
+.highlight {
+  background-color: yellow;
+  color: #000;
+  font-weight: bold;
+}
+
+@media (max-width: 900px) {
+  .site-header { flex-direction: column; align-items: stretch; }
+  .search-container { order: 1; margin-bottom: 8px; }
+  .site-header a { order: 2; align-self: center; }
+  .site-header a img { max-height: 72px; }
+  .container { padding: calc(var(--header-h) + 16px) 20px 40px 20px; }
+  .section { max-width: 100%; }
+  .search-container input { width: 180px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ✅ Header -->
+<header class="site-header" id="siteHeader">
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search STT topics...">
+  </div>
+  <a href="https://ridgecapitalsolutions.com" target="_blank" rel="noopener">
+    <img src="https://i.postimg.cc/NjskjGmv/Ridge-White-Logo.png" alt="Ridge Capital Solutions" id="brandLogo">
+  </a>
+</header>
+
+<div class="container">
+
+  <!-- ✅ STT Errors -->
+  <div class="section">
+    <h2>STT Errors</h2>
+    <ul>
+      <li class="list-item" data-description="This error message means there is a disconnection between STT and the broker server. This kind of alert can be disregarded since the STT is designed to reconnect automatically.<p><b><i>Email Response</b></i></p><p>This error means that STT is currently unable to connect to the broker’s trade server. When you see “MT Error: 10031 No connection with the trade server”, it indicates that the command that STT just tried, such as opening or closing a trade, could not be processed because there’s no active connection at that moment.</p><p>The platform is designed to automatically retry the command every second. Once the connection is re-established, whether through your internet stabilizing or the broker’s server coming back online, the action will go through without any additional steps from you.</p>">
+        10031 No connection with the trade server
+      </li>
+      <li class="list-item" data-description="This error message means that STT was not able to copy the action from the master for closing a trade. This normally happens if the volume of the order is not suitable for the client's account.<p><b><i>Email Response</b></i></p><p>For this type of error, we can disregard it. According to our developers, this occurs when the follower account’s balance is significantly lower than the master account’s balance. In such cases, the system intelligently skips smaller positions that would otherwise result in negligible profits. These positions are typically too small to be meaningful or cost-effective once transaction costs and slippage are taken into account.</p><p>Skipping these trades helps ensure better efficiency and trading relevance on lower-balance accounts.</p>">
+        close/open volume less than minimum
+      </li>
+      <li class="list-item" data-description="Orders were being skipped because it's not necessary for the client's account size.<p><b><i>Email Response</b></i></p><p>I wanted to provide some clarity regarding trade activity on your account. You may notice that certain trades are being skipped. This happens because your account balance is significantly smaller compared to the master account.</p><p>The master account, having a much larger balance, sometimes opens very small trades that are primarily designed to add incremental volume for accounts of that size. For smaller accounts, these trades are not essential, and skipping them does not mean you are missing profitable opportunities. It simply avoids unnecessary micro-lot orders that do not align with your account’s balance and trading strategy.</p><p>Rest assured, your account will still capture the main trades that drive performance. The system is designed this way to keep trading consistent and proportional to your account size.</p>">
+        skipped trades
+      </li>
+      <li class="list-item" data-description="This happens when the live trading account gets disconnected from the STT itself which might be because of a master password update or broker server change.<p><b><i>Email Response</b></i></p><p>This usually happens because brokers regularly perform server maintenance during weekends. When this takes place, connections may drop temporarily, making it harder to connect new accounts or keep existing ones online.</p><p>The good news is that this is normal and only temporary. Once the broker’s maintenance is complete and the market reopens on Sunday evening (5 PM EST), connections generally stabilize. To make sure your account reconnects smoothly, please:<br>1. Log in to your STT dashboard and check that your account credentials are correct.<br>2. If your broker changed any details (like password or server), update them in the system.<br>If you’re still having issues after the market reopens, let us know and we’ll be happy to assist.</p>">
+        Account Disconnection
+      </li>
+      <li class="list-item" data-description="This error means that the trading server rejected the command to close/open the trade. Common reasons include broker-side restrictions, temporary server delays, or the trade being in a state that prevents it from closing immediately. The system is designed to automatically retry the command every second until it successfully executes.<p><b><i>Email Response</b></i></p><p>This type of error occurs when the trading server does not accept the command at the time it was sent. Common reasons may include:<br>- Temporary restrictions or delays on the broker’s server.<br>- High market activity or volatility causes the server to prioritize other requests.<br>- Trade conditions (such as spread changes, price movement, or execution rules) are preventing an immediate action.<br>Please rest assured that this does not mean the trade is stuck. Our system automatically reattempts the command once every second until the broker accepts it.</p>">
+        10006 Request rejected
+      </li>
+    </ul>
+  </div>
+
+  <!-- ✅ SOPs -->
+  <div class="section">
+    <h2>Standard Operating Procedures (SOPs)</h2>
+    <ul>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1gfckFvNJEdNhNh2IN_q_e-O14aqS6cypy2RB2RTi0lo/edit?tab=t.0">Welcome Email</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1tcXTApfF6Hf9mM5VWOvQLj_xbVfAOcLVKTsQJfV5bow/edit?tab=t.cvjc8mqhx86j">Onboarding Details and Checklist</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1tcXTApfF6Hf9mM5VWOvQLj_xbVfAOcLVKTsQJfV5bow/edit?tab=t.bfreydw4gpsx">Funding Process</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1KayIkPvj-TDkrIWOeF09bKhVm2JSbR7Bs5kYRPYFC04/edit?tab=t.0">Monthly Maintenance (New Client)</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1KayIkPvj-TDkrIWOeF09bKhVm2JSbR7Bs5kYRPYFC04/edit?tab=t.uof2imalasx">Monthly Maintenance (Existing Client)</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1QcE1vpzgwRyNDNDSqtoOnj8VKlheGHGwa_569spq2LA/edit?tab=t.0">First Call Email Reminder</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1QcE1vpzgwRyNDNDSqtoOnj8VKlheGHGwa_569spq2LA/edit?tab=t.3pdfey6i1hbp">Text and Email Meeting Reminders</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1VAZFd0yuZNHarKPutYZTMfb91vFOEpIDemPXgMwMLIg/edit?tab=t.6sg5v8n9gk0">Unresponsive (Pending Onboarding)</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1VAZFd0yuZNHarKPutYZTMfb91vFOEpIDemPXgMwMLIg/edit?tab=t.yyzbawb9yf4t">Not Live - After 15 Days</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1ESSRJkGqMF88ZDW8YXztF9h8RrVNOslDOOBNdwUj72I/edit?tab=t.fl97k7mt9mm0">Email Summary</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1ESSRJkGqMF88ZDW8YXztF9h8RrVNOslDOOBNdwUj72I/edit?tab=t.bvjoqt4ieskg">GHL Notes</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1fGCvIxPcQzil9usQeXCyS06yJIWh92ORH4Zds_ztISM/edit?tab=t.f2vg3y21ixct">Keymaker Profile Creation</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1fGCvIxPcQzil9usQeXCyS06yJIWh92ORH4Zds_ztISM/edit?tab=t.beqadl3ri4gz">Keymaker SOP</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1fGCvIxPcQzil9usQeXCyS06yJIWh92ORH4Zds_ztISM/edit?tab=t.r7z287f1map1">FXblue SOP</li>
+                <li class="list-item" data-link="https://docs.google.com/document/d/1Fuw8TuPq65sGdOGbM8ooTqfgyDDn5Qnx4QkCswfD3rI/edit?tab=t.0">Refund SOP</li>
+                <li class="list-item" data-link="https://docs.google.com/spreadsheets/d/1ZkUQE4XA3qpMlmUIw11nvAt8ekctwFaZ-4E7Lgsmn6c/edit?pli=1&gid=558077932#gid=558077932">Lead Assignment</li>
+                <li class="list-item" data-link="https://docs.google.com/spreadsheets/d/1IN9QL5-Z97r-FqzEP01CuIW6cFzPKfdRjmPnxqwY9aw/edit?gid=1110318478#gid=1110318478">Not Onboarded</li>
+    </ul>
+  </div>
+
+  <!-- ✅ FAQs -->
+  <div class="section">
+    <h2>Frequently Asked Questions (FAQs)</h2>
+    <ul>
+      <li class="list-item" data-description="<b>Q:</b> What is STT?<br><b>A:</b> STT (Social Trader Tool) is a trade-copying platform that connects master and follower accounts to automatically mirror trades. It allows users to follow expert strategies without manually trading.">What is STT?</li>
+      <li class="list-item" data-description="<b>Q:</b> How does STT work?<br><b>A:</b> STT uses API connections between brokers and accounts. When the master opens or closes a trade, the same action is copied to follower accounts instantly and proportionally.">How does STT work?</li>
+      <li class="list-item" data-description="<b>Q:</b> How do I stop copying trades?<br><b>A:</b> Go to Configurator → Trade Copiers → Green Play Button → Stop Copying New Trades. This stops new trades while existing ones remain managed by the system.">How to stop copying trades?</li>
+      <li class="list-item" data-description="<b>Q:</b> Does STT guarantee profits?<br><b>A:</b> No. STT only automates trade copying. Profitability depends on the master strategy’s performance and market conditions.">Does STT guarantee profits?</li>
+      <li class="list-item" data-description="<b>Q:</b> How can I check if STT is connected?<br><b>A:</b> Log in to your STT dashboard. A green icon under ‘Accounts’ indicates a live connection. Red or gray means disconnected.">How do I check if STT is connected?</li>
+      <li class="list-item" data-description="<b>Q:</b> What happens during broker maintenance?<br><b>A:</b> Temporary disconnections may occur during broker maintenance. STT automatically restores connection once servers are back online.">What happens during broker maintenance?</li>
+      <li class="list-item" data-description="<b>Q:</b> Can I connect multiple brokers?<br><b>A:</b> Yes. STT supports connecting multiple MT4/MT5 brokers as long as they allow API access.">Can I connect multiple brokers?</li>
+    </ul>
+  </div>
+
+</div>
+
+<script>
+// ✅ Keep content below the header (auto height)
+function syncHeaderOffset() {
+  const header = document.getElementById('siteHeader');
+  if (!header) return;
+  const h = header.offsetHeight;
+  document.documentElement.style.setProperty('--header-h', h + 'px');
+}
+
+window.addEventListener('load', syncHeaderOffset);
+window.addEventListener('resize', syncHeaderOffset);
+
+// ✅ Open link or popup
+document.addEventListener('DOMContentLoaded', () => {
+  // Re-sync after logo loads (in case height changes)
+  const logo = document.getElementById('brandLogo');
+  if (logo) {
+    if (logo.complete) syncHeaderOffset();
+    else logo.addEventListener('load', syncHeaderOffset);
+  }
+
+  document.querySelectorAll('.list-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const link = item.getAttribute('data-link');
+      const description = item.getAttribute('data-description');
+      const title = item.textContent.trim();
+
+      if (link) {
+        window.open(link, '_blank');
+      } else if (description) {
+        const popup = `
+        <!DOCTYPE html>
+        <html lang='en'>
+        <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>${title}</title>
+        <style>
+          body { font-family: 'Times New Roman', serif; color: #444; padding: 30px; line-height: 1.6; }
+          h1 { color: #007bff; }
+        </style>
+        </head>
+        <body>
+          <h1>${title}</h1>
+          <p>${description}</p>
+        </body>
+        </html>`;
+        const tab = window.open('', '_blank');
+        tab.document.write(popup);
+        tab.document.close();
+      }
+    });
+  });
+
+  // ✅ Search + highlight
+  const searchInput = document.getElementById('searchInput');
+  const listItems = document.querySelectorAll('.list-item');
+  searchInput.addEventListener('input', () => {
+    const filter = searchInput.value.toLowerCase();
+    listItems.forEach(item => {
+      const text = item.textContent;
+      const lower = text.toLowerCase();
+      if (lower.includes(filter)) {
+        item.style.display = "";
+        if (filter) {
+          const regex = new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+          item.innerHTML = text.replace(regex, "<span class='highlight'>$1</span>");
+        } else {
+          item.innerHTML = text;
+        }
+      } else {
+        item.style.display = "none";
+        item.innerHTML = text;
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
