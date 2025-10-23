@@ -145,6 +145,8 @@ ul { list-style-type: none; padding: 0; margin: 0; }
       </li>
       <li class="list-item" data-description="This error means that the trading server rejected the command to close/open the trade. Common reasons include broker-side restrictions, temporary server delays, or the trade being in a state that prevents it from closing immediately. The system is designed to automatically retry the command every second until it successfully executes.<p><b><i>Email Response</b></i></p><p>This type of error occurs when the trading server does not accept the command at the time it was sent. Common reasons may include:<br>- Temporary restrictions or delays on the broker’s server.<br>- High market activity or volatility causes the server to prioritize other requests.<br>- Trade conditions (such as spread changes, price movement, or execution rules) are preventing an immediate action.<br>Please rest assured that this does not mean the trade is stuck. Our system automatically reattempts the command once every second until the broker accepts it.</p>">
         10006 Request rejected
+     <li class="list-item" data-description="This means the price difference (slippage) between the master account and the follower account was too large, exceeding the slippage tolerance that’s been configured for the copier.<p><b><i>Email Response</b></i></p><p>The trade didn’t execute because the price moved beyond your copier’s slippage limit — meaning the market price was already too far from the master account’s entry when your account tried to open it.<br>This is a protection feature to avoid poor entries, and it can happen during fast market moves. The copier keeps retrying each second until the price is back within range.</p>">
+        Trade is beyond copier defined slippage settings
       <li class="list-item" data-link="https://docs.google.com/spreadsheets/d/1nwS45Ie0iIbJ2CqO-KTbb-Wttz_xKER1zQRFoO4d_m8/edit?gid=0#gid=0">
         MT4 Error Codes
       <li class="list-item" data-link="https://docs.google.com/spreadsheets/d/19owXrMBPdsYOfRaoTmISpGHlPAZDEMIKmDp9SlFKE8c/edit?gid=0#gid=0">
@@ -276,5 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
