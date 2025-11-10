@@ -190,6 +190,61 @@ ul { list-style-type: none; padding: 0; margin: 0; }
       <li class="list-item" data-description="<b>Q:</b> What happens during broker maintenance?<br><b>A:</b> Temporary disconnections may occur during broker maintenance. STT automatically restores connection once servers are back online.">What happens during broker maintenance?</li>
       <li class="list-item" data-description="<b>Q:</b> Can I connect multiple brokers?<br><b>A:</b> Yes. STT supports connecting multiple MT4/MT5 brokers as long as they allow API access.">Can I connect multiple brokers?</li>
       <li class="list-item" data-description="<b>Q:</b> Is STT safe when it comes to account security?<br><b>A:</b> We store MT4/5 credentials encrypted, accessible only through your Social Trader Tools account. Access to servers is SSH-key restricted; support may log in only when you request assistance.">Is STT safe when it comes to account security?</li>
+      <li class="list-item" data-description="
+Q: What is Leverage and Margin?<br>
+A: 
+<h2>What Leverage and Margin Mean</h2>
+<br>Leverage allows traders to borrow money from the broker to open larger positions than their actual balance. 
+For example, with 1:100 leverage, $100 can control a $10,000 trade.<br><br>
+
+Margin is the amount of your own money set aside as a security deposit for open trades. 
+Higher leverage means less margin is required, but risk increases because price movements have a stronger impact on your balance.<br><br>
+<h2>How a Margin Call Happens</h2><br>
+When the market moves against your open trades, your account equity (balance plus profit or loss) drops. 
+As it approaches the margin used, the margin level (Equity ÷ Margin × 100%) decreases. 
+If it falls below the broker’s set threshold (e.g., 100% or 50%), a margin call occurs or positions may be automatically closed.<br><br>
+
+Example:<br>
+<table>
+  <tr>
+    <th>Balance</th>
+    <th>Leverage</th>
+    <th>Trade Size</th>
+    <th>Margin Used</th>
+    <th>Margin Level</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td>$1,000</td>
+    <td>1:100</td>
+    <td>$50,000</td>
+    <td>$500</td>
+    <td>200%</td>
+    <td>Safe</td>
+  </tr>
+  <tr>
+    <td>Equity: $600</td>
+    <td>1:100</td>
+    <td>$50,000</td>
+    <td>$500</td>
+    <td>120%</td>
+    <td>Getting Close</td>
+  </tr>
+  <tr>
+    <td>Equity: $450</td>
+    <td>1:100</td>
+    <td>$50,000</td>
+    <td>$500</td>
+    <td>90%</td>
+    <td>Margin Call Triggered</td>
+  </tr>
+</table><br>
+
+Formula:<br>
+Margin Level = (Equity ÷ Margin) × 100%<br><br>
+
+In short, leverage magnifies both profits and losses. If open losses become too large, available margin decreases, the margin level drops, and the broker may issue a margin call or close trades automatically.
+">Leverage and Margin</li>
       <li class="list-item" data-description="<b>Q:</b> What is IRA, ROTH IRA, and 401k?<br><b>A:
         <p><strong>Traditional IRA</strong> allows individuals to contribute pre-tax income toward investments that can grow tax-deferred until withdrawal. It’s ideal for traders who want to lower taxable income today while compounding untaxed growth until retirement. Withdrawals after age 59½ are taxed as ordinary income.</p>
         <p><strong>Roth IRA</strong> is designed for long-term, tax-free growth. Contributions are made with after-tax money, and all trading gains—whether from forex, stocks, or other investments—are completely tax-free when withdrawn at retirement. This structure is powerful for active traders who expect higher future income, since all future gains are shielded from taxes.</p>
@@ -371,6 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
