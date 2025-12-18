@@ -153,6 +153,16 @@ ul { list-style-type: none; padding: 0; margin: 0; }
       <li class="list-item" data-link="https://docs.google.com/spreadsheets/d/19owXrMBPdsYOfRaoTmISpGHlPAZDEMIKmDp9SlFKE8c/edit?gid=0#gid=0">
         MT5 Error Codes
       </li>
+      <li class="list-item" data-description="This happens because the <i>opposite positions on a single symbol are disabled</i> rule is set for the trading account. For example, if the account has a buy position, then a user cannot open a sell position or place a pending sell order. Ther rule is onlyu applied to acounts with hedging accounting system.<p><b><i>Email Response</i></b></p><p>Hi (client),</p>
+<p>The error you’re seeing — “opposite positions on a single symbol are disabled” — is happening because your R-S15 FIFO account is with a US-based broker (Forex.com).</p>
+<p>Here’s what it means in simple terms:</p>
+  <p>• Your account cannot hold both a buy and a sell position on the same symbol at the same time.</p>
+  <p>• For example, if there’s an open buy on EURGBP, the system cannot open a sell position until that buy is closed.</p>
+  <p>• Pending orders in the opposite direction are also blocked until existing positions are closed.</p>
+  <p>• This is a regulatory requirement for US brokers and cannot be overridden by the system.</p>
+<p>Because of this rule, the Social Trader Tool (STT) will re-attempt the command every minute, but it will only execute once the existing position is closed or reversed.</p>">
+        Error Code 10046
+     </li>
     </ul>
   </div>
 
@@ -462,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
