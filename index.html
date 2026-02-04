@@ -163,6 +163,17 @@ ul { list-style-type: none; padding: 0; margin: 0; }
 <p>Because of this rule, the Social Trader Tool (STT) will re-attempt the command every minute, but it will only execute once the existing position is closed or reversed.</p>">
         Error Code 10046
      </li>
+      <li class="list-item" data-description="The trade didn’t open because the broker couldn’t provide a valid price at the exact moment the order was sent (Error 136: Off Quotes). This usually happens during fast market movement or low liquidity. The system will keep retrying every second, and the trade will only execute once a stable quote is available; otherwise, it may be skipped. This is not an issue with your account or the copier connection.<p><b><i>Email Response</i></b></p><p>The system successfully sent the order, however it was rejected by the broker due to Error Code 136 (Off Quotes). This means that at the moment the trade was placed, the broker could not provide a valid executable price—typically caused by rapid price movement, spread changes, or temporary liquidity conditions.</p>
+      <p> What to expect:</p>
+          <p>•The system will automatically retry the trade once every second.</p>
+          <p>•The trade will execute as soon as a valid quote becomes available and market conditions stabilize.</p>
+          <p>•If the broker continues rejecting quotes due to volatility, the trade may be skipped for that specific entry.</p>
+
+<p>Please note this does not indicate an issue with your account or the copier connection, and no funds were lost from this particular trade attempt.</p>
+
+<p>If you’d like, we can also review your execution settings (such as slippage tolerance and risk parameters) to reduce the likelihood of this occurring during high-volatility periods.</p>">
+        Error Code: 136 / Off quotes
+      </li>
     </ul>
   </div>
 
@@ -472,6 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
 
 
 
